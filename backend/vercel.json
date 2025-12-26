@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "name": "secure-quiz-backend",
+  "buildCommand": "npm install",
+  "builds": [
+    {
+      "src": "api/[[...route]].js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": "src/**"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/[[...route]].js"
+    }
+  ],
+  "env": {
+    "FIREBASE_PROJECT_ID": "@firebase_project_id",
+    "FIREBASE_PRIVATE_KEY": "@firebase_private_key",
+    "FIREBASE_CLIENT_EMAIL": "@firebase_client_email",
+    "FIREBASE_CLIENT_ID": "@firebase_client_id",
+    "JWT_SECRET": "@jwt_secret",
+    "ALLOWED_ORIGINS": "@allowed_origins"
+  },
+  "functions": {
+    "api/[[...route]].js": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  }
+}
